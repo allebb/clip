@@ -3,6 +3,7 @@
 /**
  * An example CLI bootstap script.
  */
+
 // Initiate the Composer autoloader.
 $bindir = dirname(__FILE__);
 require_once $bindir . '/../vendor/autoload.php';
@@ -24,6 +25,7 @@ if ($app->arguments()->isFlagSet('d')) {
     $app->writearr(['Commands' => $app->arguments()->commands()]);
     $app->writearr(['Options' => $app->arguments()->options()]);
     $app->writearr(['Flags' => $app->arguments()->flags()]);
+    $app->writearr(['All arguments' => $app->arguments()->all()]);
     $app->exitWithSuccess();
 }
 

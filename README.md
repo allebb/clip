@@ -1,2 +1,2 @@
-# clip
-A Library for speeding up PHP CLI applications.
+# Clip
+A package for speeding up development of PHP console (CLI) applications.

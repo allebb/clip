@@ -4,17 +4,28 @@ namespace Ballen\Clip\Utilities;
 
 use Ballen\Collection\Collection;
 
+/**
+ * Clip
+ * 
+ * A package for speeding up development of PHP console (CLI) applications.
+ *
+ * @author Bobby Allen <ballen@bobbyallen.me>
+ * @license https://raw.githubusercontent.com/bobsta63/clip/master/LICENSE
+ * @link https://github.com/bobsta63/clip
+ * @link http://www.bobbyallen.me
+ *
+ */
 class ArgumentsParser
 {
 
     /**
-     * Collection of CLI parsed "commands" eg. (--reset).
+     * Collection of CLI parsed "commands" eg. (reset).
      * @var Collection
      */
     private $commands;
 
     /**
-     * Collection of CLI parsed "options" eg. (--option=something).
+     * Collection of CLI parsed "options" eg. (--option=something or --option="something").
      * @var Collection
      */
     private $options;
@@ -73,6 +84,15 @@ class ArgumentsParser
     }
 
     /**
+     * Return all CLI arguments in order.
+     * @return Collection
+     */
+    public function all()
+    {
+        return $this->arguments;
+    }
+
+    /**
      * Parses the PHP $argv variable and adds them to the relivant type collection.
      * @todo Clean up the nested loops etc.
      * @param array $args
@@ -80,47 +100,18 @@ class ArgumentsParser
      */
     private function parse($args)
     {
-        $endofoptions = false;
-        while ($arg = array_shift($args)) {
-
-            if ($endofoptions) {
-                $this->arguments->push($arg);
+        foreach ($args as $argument) {
+            $this->arguments->push($argument);
+            if ($this->detectFlags($argument)) {
                 continue;
             }
-
-            if (substr($arg, 0, 2) === '--') {
-
-                if (!strpos($arg, '=')) {
-                    $this->flags->push(ltrim($arg, '--'));
-                    continue;
-                }
-
-                $value = "";
-                $com = substr($arg, 2);
-
-                if (strpos($com, '=')) {
-                    list($com, $value) = explode("=", $com, 2);
-                } elseif (strpos($args[0], '-') !== 0) {
-                    while (strpos($args[0], '-') !== 0)
-                        $value .= array_shift($args) . ' ';
-                    $value = rtrim($value, ' ');
-                }
-
-                if (empty($value)) {
-                    $value = true;
-                }
-                $this->options->put($com, $value);
+            if ($this->detectOptions($argument)) {
                 continue;
             }
-
-            if (substr($arg, 0, 1) === '-') {
-                for ($i = 1; isset($arg[$i]); $i++)
-                    $this->flags->push($arg[$i]);
+            if ($this->detectConcatFlag($argument)) {
                 continue;
             }
-
-            $this->commands->push($arg);
-            continue;
+            $this->commands->push($argument);
         }
     }
 
@@ -156,5 +147,56 @@ class ArgumentsParser
     public function getCommand($part, $default = false)
     {
         return $this->commands->get($part, $default);
+    }
+
+    /**
+     * Detects and sets "flag" type arguments.
+     * @param string $argument The argument string.
+     * @return boolean
+     */
+    private function detectFlags($argument)
+    {
+        if ((substr($argument, 0, 2) === '--') && (!strpos($argument, '='))) {
+            $this->flags->push(ltrim($argument, '--'));
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Detects and sets "concatenated flag" type arguments.
+     * @param string $argument The argument string.
+     * @return boolean
+     */
+    private function detectConcatFlag($argument)
+    {
+        if (substr($argument, 0, 1) === '-') {
+            for ($i = 1; isset($argument[$i]); $i++) {
+                $this->flags->push($argument[$i]);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Detects and sets "option" type arguments.
+     * @param type $argument The argument string.
+     * @return boolean
+     */
+    private function detectOptions($argument)
+    {
+        if (substr($argument, 0, 2) === '--') {
+            $name = substr($argument, 2);
+            $value = '';
+            if (strpos($name, '=')) {
+                list($name, $value) = explode('=', $argument, 2);
+            } else {
+                $value = rtrim($argument, $value, ' ');
+            }
+            $this->options->put($name, $value);
+            return true;
+        }
+        return false;
     }
 }

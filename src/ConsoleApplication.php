@@ -5,6 +5,17 @@ namespace Ballen\Clip;
 use Ballen\Clip\Utilities\ArgumentsParser;
 use InvalidArgumentException;
 
+/**
+ * Clip
+ * 
+ * A package for speeding up development of PHP console (CLI) applications.
+ *
+ * @author Bobby Allen <ballen@bobbyallen.me>
+ * @license https://raw.githubusercontent.com/bobsta63/clip/master/LICENSE
+ * @link https://github.com/bobsta63/clip
+ * @link http://www.bobbyallen.me
+ *
+ */
 class ConsoleApplication
 {
 
@@ -14,6 +25,11 @@ class ConsoleApplication
      */
     private $arguments;
 
+    /**
+     * Console Application Constructor
+     * @param array $argv The PHP $argv array (Pass $argv global if you wish to access the CLI arguments)
+     * @return void
+     */
     public function __construct($argv = [])
     {
         $this->arguments = new ArgumentsParser($argv);
@@ -33,9 +49,9 @@ class ConsoleApplication
      * @param boolean $enforced Enforce execution only through the CLI.
      * @return void
      */
-    public function enforceCli($enforced = true)
+    public function enforceCli($enforced = false)
     {
-        if ($enforced && php_sapi_name() != "cli") {
+        if ($enforced && (php_sapi_name() != "cli")) {
             die('CLI excution permitted only!');
         }
     }
@@ -46,6 +62,9 @@ class ConsoleApplication
      */
     public function isSuperUser()
     {
+        if (!function_exists('posix_getuid')) {
+            throw new RuntimeException('The isSperUser() method requires the PHP POSIX extention to be enabled!');
+        }
         if (posix_getuid() == 0) {
             return true;
         }
@@ -73,7 +92,7 @@ class ConsoleApplication
 
     /**
      * Write a line of characters (or an empty line) to the CLI.
-     * @param string $line The text to output.
+     * @param string $text The text to output.
      */
     public function writeln($text = '')
     {
@@ -100,30 +119,25 @@ class ConsoleApplication
                 }
                 $available_options[] = $option;
             }
-
             $available_opts = rtrim(implode($available_options, '/'), '/');
             fwrite(STDOUT, $question . ' [' . $available_opts . '] ');
         }
-
         $answer = rtrim(fgets(STDIN), PHP_EOL);
-
         if (empty($answer)) {
             return $default;
         }
-
         if (count($options) > 0) {
             if (!in_array(strtolower($answer), array_map('strtolower', $options))) {
                 return $this->input($question, $default, $options);
             }
             return $answer;
         }
-
         return $answer;
     }
 
     /**
      * Writes an array to the CLI output
-     * @param array $array The array of data to write to the terminal.
+     * @param array $array The array of data to write to the console.
      * @return void
      */
     public function writearr($array = [])

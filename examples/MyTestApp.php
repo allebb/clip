@@ -1,14 +1,12 @@
 <?php
 
-class MyTestApp extends Ballen\Clip\ConsoleApplication
+use Ballen\Clip\ConsoleApplication;
+
+class MyTestApp extends ConsoleApplication
 {
 
     const APP_VERSION = "1.0.0";
 
-    /**
-     * Instantisate our Console Application and expose the current CLI arguments.
-     * @return void
-     */
     public function __construct($arguments)
     {
         parent::__construct($arguments);
