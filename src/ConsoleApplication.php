@@ -52,7 +52,7 @@ class ConsoleApplication
     public function enforceCli($enforced = false)
     {
         if ($enforced && (php_sapi_name() != "cli")) {
-            die('CLI excution permitted only!');
+            die('CLI execution permitted only!');
         }
     }
 
