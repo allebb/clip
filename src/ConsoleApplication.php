@@ -47,12 +47,13 @@ class ConsoleApplication
     /**
      * Enforces that the script must be run at the console.
      * @param boolean $enforced Enforce execution only through the CLI.
+     * @param string $error_message Custom error message.
      * @return void
      */
-    public function enforceCli($enforced = false)
+    public function enforceCli($enforced = false, $error_message = 'CLI execution permitted only!')
     {
         if ($enforced && (php_sapi_name() != "cli")) {
-            die('CLI execution permitted only!');
+            die($error_message);
         }
     }
 
