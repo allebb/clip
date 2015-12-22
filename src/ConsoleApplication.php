@@ -3,6 +3,7 @@
 namespace Ballen\Clip;
 
 use Ballen\Clip\Utilities\ArgumentsParser;
+use Ballen\Clip\Utilities\CommandRouter;
 use InvalidArgumentException;
 
 /**
@@ -26,6 +27,12 @@ class ConsoleApplication
     private $arguments;
 
     /**
+     * Command routing configuration.
+     * @var CommandRouter 
+     */
+    private $router;
+
+    /**
      * Console Application Constructor
      * @param array $argv The PHP $argv array (Pass $argv global if you wish to access the CLI arguments)
      * @return void
@@ -33,6 +40,7 @@ class ConsoleApplication
     public function __construct($argv = [])
     {
         $this->arguments = new ArgumentsParser($argv);
+        $this->router = new CommandRouter();
     }
 
     /**
@@ -42,6 +50,15 @@ class ConsoleApplication
     public function arguments()
     {
         return $this->arguments;
+    }
+
+    /**
+     * Returns the router instance.
+     * @return CommandRouter
+     */
+    public function router()
+    {
+        return $this->router;
     }
 
     /**
@@ -175,5 +192,14 @@ class ConsoleApplication
     public function exitWithError()
     {
         $this->exitWithStatus(1);
+    }
+
+    /**
+     * Run the current application.
+     * @return void
+     */
+    public function run()
+    {
+        $this->router()->dispatch($this->arguments()->getCommand(1));
     }
 }
