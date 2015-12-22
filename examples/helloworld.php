@@ -1,6 +1,5 @@
 #!/usr/bin/env php
 <?php
-
 use Ballen\Clip\Utilities\CommandRouter;
 use Ballen\Clip\Exceptions\CommandNotFoundException;
 
@@ -15,6 +14,7 @@ use Ballen\Clip\Exceptions\CommandNotFoundException;
  * @link http://www.bobbyallen.me
  *
  */
+
 // Initiate the Composer autoloader.
 $bindir = dirname(__FILE__);
 require_once $bindir . '/../vendor/autoload.php';
@@ -23,7 +23,6 @@ require_once $bindir . '/../vendor/autoload.php';
 require_once 'Commands/TestHandler.php';
 require_once 'Commands/HelpHandler.php';
 require_once 'Commands/UserHandler.php';
-
 
 $app = new CommandRouter($argv);
 
@@ -35,7 +34,7 @@ $app->add('check:name', new Commands\UserHandler);
 try {
     $app->dispatch();
 } catch (CommandNotFoundException $exception) {
-    // If the command is not found, handle it here!
-    $app->dispatch('help'); // Display the 'help' text by default?
+    // If the requested command is not found we'll display the 'help' text by default?
+    $app->dispatch('help');
 }
 

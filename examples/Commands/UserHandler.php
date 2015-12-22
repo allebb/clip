@@ -39,7 +39,7 @@ class UserHandler extends ConsoleApplication implements CommandInterface
             $this->writeln('Sorry you cannot be called ' . $username . ' today!');
             $this->exitWithError();
         }
-        $this->writeln('Cool ' . $username . ' nice to meet you!');
+        $this->writeln('Cool ' . ucfirst($username) . ' nice to meet you!');
         $this->exitWithSuccess();
     }
 
