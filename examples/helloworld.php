@@ -23,6 +23,7 @@ require_once $bindir . '/../vendor/autoload.php';
 require_once 'Commands/TestHandler.php';
 require_once 'Commands/HelpHandler.php';
 require_once 'Commands/UserHandler.php';
+require_once 'Commands/FlagsHandler.php';
 
 $app = new CommandRouter($argv);
 
@@ -30,6 +31,7 @@ $app = new CommandRouter($argv);
 $app->add('test', new Commands\TestHandler);
 $app->add('help', new Commands\HelpHandler);
 $app->add('check:name', new Commands\UserHandler);
+$app->add('country', new Commands\FlagsHandler);
 
 try {
     $app->dispatch();

@@ -35,6 +35,7 @@ class HelpHandler extends ConsoleApplication implements CommandInterface
         $this->writeln('Commands:');
         $this->writeln('  help       - This information screen');
         $this->writeln('  test       - A silly test example');
+        $this->writeln('  country    - Example using options.');
         $this->writeln('  check:name - User input example');
         $this->writeln();
         $this->exitWithSuccess();

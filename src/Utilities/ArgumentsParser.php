@@ -194,7 +194,7 @@ class ArgumentsParser
             } else {
                 $value = rtrim($argument, $value, ' ');
             }
-            $this->options->put($name, $value);
+            $this->options->put(ltrim($name, '-'), $value);
             return true;
         }
         return false;
