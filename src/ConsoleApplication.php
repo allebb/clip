@@ -100,21 +100,25 @@ class ConsoleApplication
     }
 
     /**
-     * Write to the CLI.
+     * Write to the console.
      * @param string $text The text to output.
+     * @return \Ballen\Clip\ConsoleApplication
      */
     public function write($text = '')
     {
         fwrite(STDOUT, $text);
+        return $this;
     }
 
     /**
      * Write a line of characters (or an empty line) to the CLI.
      * @param string $text The text to output.
+     * @return \Ballen\Clip\ConsoleApplication
      */
     public function writeln($text = '')
     {
         $this->write($text . PHP_EOL);
+        return $this;
     }
 
     /**
@@ -156,11 +160,12 @@ class ConsoleApplication
     /**
      * Writes an array to the CLI output
      * @param array $array The array of data to write to the console.
-     * @return void
+     * @return \Ballen\Clip\ConsoleApplication
      */
     public function writearr($array = [])
     {
         print_r($array);
+        return $this;
     }
 
     /**
