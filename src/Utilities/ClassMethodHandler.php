@@ -18,7 +18,14 @@ use Ballen\Clip\Interfaces\CommandInterface;
 class ClassMethodHandler
 {
 
+    /**
+     * Character for splitting the "dot" notation on command handlers.
+     */
     const CHAR_DOT = '.';
+
+    /**
+     * Character for splitting the "at" notation on command handlers.
+     */
     const CHAR_AT = '@';
 
     /**
@@ -93,6 +100,7 @@ class ClassMethodHandler
     /**
      * Validates that the current class and methods exist and are callable.
      * @return void
+     * @throws \RuntimeException
      */
     private function validate()
     {
@@ -108,10 +116,11 @@ class ClassMethodHandler
      * Extracts the class name and method from the Class Method string in "@" notation (eg. Class@Method).
      * @param string|array $handler The handler parameter
      * @return void
+     * @throws \InvalidArgumentException
      */
     private function fromAtNotation($handler)
     {
-        $parts = explode(self::CHAR_DOT, $handler);
+        $parts = explode(self::CHAR_AT, $handler);
         if (count($parts) !== 2) {
             throw new \InvalidArgumentException('Invalid Class Method format from "at" notation.');
         }
@@ -123,10 +132,11 @@ class ClassMethodHandler
      * Extracts the class name and method from the Class Method string in "dot" notation (eg. Class.Method).
      * @param string|array $handler The handler parameter
      * @return void
+     * @throws \InvalidArgumentException
      */
     private function fromDotNotation($handler)
     {
-        $parts = explode(self::CHAR_AT, $handler);
+        $parts = explode(self::CHAR_DOT, $handler);
         if (count($parts) !== 2) {
             throw new \InvalidArgumentException('Invalid Class Method format from "dot" notation.');
         }
@@ -138,6 +148,7 @@ class ClassMethodHandler
      * Extracts the class name (no method present) from a single string.
      * @param string|array $handler The handler parameter
      * @return void
+     * @throws \InvalidArgumentException
      */
     private function fromClassName($handler)
     {
@@ -151,11 +162,12 @@ class ClassMethodHandler
      * Extracts the class and method name from an array eg (['Class', 'Method'])
      * @param string|array $handler The handler parameter
      * @return void
+     * @throws \InvalidArgumentException
      */
     private function fromClassMethodArray($handler)
     {
         if (count($handler) !== 2) {
-            throw new \InvalidArgumentException('Class Method array constructor can only contain 2 elements.');
+            throw new \InvalidArgumentException('Class method array constructor can only contain 2 elements.');
         }
         $this->class = $handler[0];
         $this->method = $handler[1];
