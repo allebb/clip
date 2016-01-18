@@ -29,29 +29,83 @@ class ClassMethodHandler
     protected $method = 'handle';
 
     /**
+     * Optional argument to pass through when calling the Class contructor.
+     * @var array 
+     */
+    protected $arguments = [];
+
+    /**
      * Creates a new instance
      * @param string $handler
      * @param array $arguments Optional argument to pass to the class constructor.
      */
     public function __construct($handler, $arguments = [])
     {
-        $this->extract();
-    }
+        $this->arguments = $arguments;
 
-    /**
-     * Extracts the class and method name.
-     * @return void
-     */
-    private function extract()
-    {
-        
+        $this->extract($handler);
+        $this->validate();
     }
 
     /**
      * Calls the requested class and method name passing in the optional arguments.
      * @return void
      */
-    private function call()
+    public function call()
+    {
+        
+    }
+
+    /**
+     * Extracts the class and method name.
+     * @param string|array $handler The handler parameter
+     * @return void
+     */
+    private function extract($handler)
+    {
+        
+    }
+
+    /**
+     * Validates that the current class and method exists.
+     * @return void
+     */
+    private function validate()
+    {
+        
+    }
+
+    /**
+     * Extracts the class name and method from the Class Method string in "@" notation (eg. Class@Method).
+     * @return void
+     */
+    private function fromAtNotation()
+    {
+        
+    }
+
+    /**
+     * Extracts the class name and method from the Class Method string in "dot" notation (eg. Class.Method).
+     * @return void
+     */
+    private function fromDotNotation()
+    {
+        
+    }
+
+    /**
+     * Extracts the class name (no method present) from a single string.
+     * 
+     */
+    private function fromClassName()
+    {
+        
+    }
+
+    /**
+     * Extracts the class and method name from an array eg (['Class', 'Method'])
+     */
+    private function fromClassMethodArray()
     {
         
     }
