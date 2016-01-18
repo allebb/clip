@@ -85,7 +85,12 @@ class ClassMethodHandler
      */
     private function validate()
     {
-        
+        if (!class_exists($this->class)) {
+            throw new \RuntimeException(sprintf('Class %s does not exist, is this the correct namespace?', $this->class));
+        }
+        if (in_array($this->method, get_class_methods($this->class))) {
+            throw new \RuntimeException(sprintf('The method "%s" does not exist in "%s" class.', $this->method, $this->class));
+        }
     }
 
     /**
