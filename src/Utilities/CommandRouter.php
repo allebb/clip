@@ -2,9 +2,7 @@
 
 namespace Ballen\Clip\Utilities;
 
-use Ballen\Clip\Interfaces\CommandInterface;
 use Ballen\Collection\Collection;
-use RuntimeException;
 use Ballen\Clip\Exceptions\CommandNotFoundException;
 
 /**
@@ -46,17 +44,20 @@ class CommandRouter
 
     /**
      * Dispatches the command handler.
-     * @param string $command The command handler to execute.
+     * @param string $call The command handler to execute.
      * @return void
      * @throws CommandNotFoundException
      */
-    public function dispatch($command = false)
+    public function dispatch($call = false)
     {
-        $handler = $this->routes->get($this->arguments->getCommand(1), false);
-        if (!$this->routes->get($command, false)) {
-            throw new CommandNotFoundException('Command ' . $command . ' is not registered.');
+        $command = $this->routes->get($this->arguments->getCommand(1), false);
+        if ($this->routes->get($call, false)) {
+            $command = $this->routes->get($call, false);
         }
-        $command_handler = new ClassMethodHandler($this->routes->get($command));
-        return $command_handler->call($this->arguments);
+        if ($command) {
+            $handler = new ClassMethodHandler($command);
+            return $handler->call($this->arguments);
+        }
+        throw new CommandNotFoundException(sprintf('Command %s is not registered.', $call));
     }
 }

@@ -53,21 +53,20 @@ class ClassMethodHandler
 
     /**
      * Calls the requested class and method name passing in the optional arguments.
-     * @param array $params Optional parameters to pass to the class method.
+     * @param mixed $params Optional parameters to pass to the class method.
      * @return void
      */
-    public function call($params = [])
+    public function call($params = null)
     {
         $method = $this->method;
-        $method_parameters = func_get_args($params);
 
         if (!empty($this->constructor_arguments)) {
             $instance = new $this->class($this->constructor_arguments);
         } else {
             $instance = new $this->class();
         }
-        if (!empty($method_parameters)) {
-            return $instance->$method($method_parameters);
+        if (!is_null($params)) {
+            return $instance->$method($params);
         }
         return $instance->$method();
     }
