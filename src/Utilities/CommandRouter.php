@@ -34,20 +34,29 @@ class CommandRouter
         $this->arguments = new ArgumentsParser($arguments);
     }
 
-    public function add($command, CommandInterface $handler)
+    /**
+     * Register a new command handler.
+     * @param string $command The command name
+     * @param mixed $handler The command handler (see ClassMethodHandler)
+     */
+    public function add($command, $handler)
     {
         $this->routes->put($command, $handler);
     }
 
+    /**
+     * Dispatches the command handler.
+     * @param string $command The command handler to execute.
+     * @return void
+     * @throws CommandNotFoundException
+     */
     public function dispatch($command = false)
     {
         $handler = $this->routes->get($this->arguments->getCommand(1), false);
-        if ($this->routes->get($command, false)) {
-            $handler = $this->routes->get($command, false);
+        if (!$this->routes->get($command, false)) {
+            throw new CommandNotFoundException('Command ' . $command . ' is not registered.');
         }
-        if ($handler) {
-            return $handler->handle($this->arguments);
-        }
-        throw new CommandNotFoundException('Command ' . $command . ' is not registered.');
+        $command_handler = new ClassMethodHandler($this->routes->get($command));
+        return $command_handler->call($this->arguments);
     }
 }

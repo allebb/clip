@@ -2,6 +2,8 @@
 
 namespace Ballen\Clip\Utilities;
 
+use Ballen\Clip\Interfaces\CommandInterface;
+
 /**
  * Clip
  * 
@@ -32,32 +34,42 @@ class ClassMethodHandler
     protected $method = 'handle';
 
     /**
-     * Optional argument to pass through when calling the Class contructor.
-     * @var array 
+     * Optional argument(s) to pass through when calling the Class contructor.
+     * @var mixed
      */
-    protected $constructor_arguments = [];
+    protected $constructor_arguments;
 
     /**
      * Creates a new instance
      * @param string $handler
-     * @param array $constructor_arguments Optional argument to pass to the class constructor.
+     * @param array $constructor_arguments Optional arguments to pass to the class constructor.
      */
     public function __construct($handler, $constructor_arguments = [])
     {
-        $this->constructor_arguments = $constructor_arguments;
+        $this->constructor_arguments = func_get_args($constructor_arguments);
         $this->extract($handler);
         $this->validate();
     }
 
     /**
      * Calls the requested class and method name passing in the optional arguments.
-     * @param array $method_arguments Optional arguments when calling the method.
+     * @param array $params Optional parameters to pass to the class method.
      * @return void
      */
-    public function call($method_arguments = [])
+    public function call($params = [])
     {
-        $instance = new $this->class($this->arguments);
-        return call_user_func_array($instance->{$this->method}(), $method_arguments);
+        $method = $this->method;
+        $method_parameters = func_get_args($params);
+
+        if (!empty($this->constructor_arguments)) {
+            $instance = new $this->class($this->constructor_arguments);
+        } else {
+            $instance = new $this->class();
+        }
+        if (!empty($method_parameters)) {
+            return $instance->$method($method_parameters);
+        }
+        return $instance->$method();
     }
 
     /**
@@ -70,10 +82,10 @@ class ClassMethodHandler
         if (is_array($handler)) {
             return $this->fromClassMethodArray($handler);
         }
-        if (strpos($handler, '@') !== false) {
+        if (strpos($handler, self::CHAR_AT) !== false) {
             return $this->fromAtNotation($handler);
         }
-        if (strpos($handler, '.') !== false) {
+        if (strpos($handler, self::CHAR_DOT) !== false) {
             return $this->fromDotNotation($handler);
         }
         return $this->fromClassName($handler);
@@ -88,7 +100,7 @@ class ClassMethodHandler
         if (!class_exists($this->class)) {
             throw new \RuntimeException(sprintf('Class %s does not exist, is this the correct namespace?', $this->class));
         }
-        if (in_array($this->method, get_class_methods($this->class))) {
+        if (!in_array($this->method, get_class_methods($this->class))) {
             throw new \RuntimeException(sprintf('The method "%s" does not exist in "%s" class.', $this->method, $this->class));
         }
     }
@@ -100,7 +112,7 @@ class ClassMethodHandler
      */
     private function fromAtNotation($handler)
     {
-        $parts = explode(CHAR_DOT, $handler);
+        $parts = explode(self::CHAR_DOT, $handler);
         if (count($parts) !== 2) {
             throw new \InvalidArgumentException('Invalid Class Method format from "at" notation.');
         }
@@ -115,7 +127,7 @@ class ClassMethodHandler
      */
     private function fromDotNotation($handler)
     {
-        $parts = explode(CHAR_AT, $handler);
+        $parts = explode(self::CHAR_AT, $handler);
         if (count($parts) !== 2) {
             throw new \InvalidArgumentException('Invalid Class Method format from "dot" notation.');
         }
@@ -130,6 +142,9 @@ class ClassMethodHandler
      */
     private function fromClassName($handler)
     {
+        if (!is_subclass_of($handler, CommandInterface::class)) {
+            throw new \InvalidArgumentException(sprintf('The command class must implement the "CommandInterface" interface.'));
+        }
         $this->class = $handler;
     }
 
