@@ -35,28 +35,29 @@ class ClassMethodHandler
      * Optional argument to pass through when calling the Class contructor.
      * @var array 
      */
-    protected $arguments = [];
+    protected $constructor_arguments = [];
 
     /**
      * Creates a new instance
      * @param string $handler
-     * @param array $arguments Optional argument to pass to the class constructor.
+     * @param array $constructor_arguments Optional argument to pass to the class constructor.
      */
-    public function __construct($handler, $arguments = [])
+    public function __construct($handler, $constructor_arguments = [])
     {
-        $this->arguments = $arguments;
+        $this->constructor_arguments = $constructor_arguments;
         $this->extract($handler);
         $this->validate();
     }
 
     /**
      * Calls the requested class and method name passing in the optional arguments.
+     * @param array $method_arguments Optional arguments when calling the method.
      * @return void
      */
-    public function call()
+    public function call($method_arguments = [])
     {
         $instance = new $this->class($this->arguments);
-        return call_user_func($instance->{$this->method});
+        return call_user_func_array($instance->{$this->method}(), $method_arguments);
     }
 
     /**
@@ -96,7 +97,7 @@ class ClassMethodHandler
     {
         $parts = explode(CHAR_DOT, $handler);
         if (count($parts) !== 2) {
-            // Not the correct number of array items value.
+            throw new \InvalidArgumentException('Invalid Class Method format from "at" notation.');
         }
         $this->class = $parts[0];
         $this->method = $parts[1];
@@ -111,7 +112,7 @@ class ClassMethodHandler
     {
         $parts = explode(CHAR_AT, $handler);
         if (count($parts) !== 2) {
-            // Not the correct number of array items value.
+            throw new \InvalidArgumentException('Invalid Class Method format from "dot" notation.');
         }
         $this->class = $parts[0];
         $this->method = $parts[1];
@@ -124,7 +125,7 @@ class ClassMethodHandler
      */
     private function fromClassName($handler)
     {
-        
+        $this->class = $handler;
     }
 
     /**
@@ -134,6 +135,10 @@ class ClassMethodHandler
      */
     private function fromClassMethodArray($handler)
     {
-        
+        if (count($handler) !== 2) {
+            throw new \InvalidArgumentException('Class Method array constructor can only contain 2 elements.');
+        }
+        $this->class = $handler[0];
+        $this->method = $handler[1];
     }
 }
