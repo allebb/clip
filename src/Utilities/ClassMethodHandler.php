@@ -16,6 +16,9 @@ namespace Ballen\Clip\Utilities;
 class ClassMethodHandler
 {
 
+    const CHAR_DOT = '.';
+    const CHAR_AT = '@';
+
     /**
      * Class of which will be instantiated at runtime.
      * @var string 
@@ -42,7 +45,6 @@ class ClassMethodHandler
     public function __construct($handler, $arguments = [])
     {
         $this->arguments = $arguments;
-
         $this->extract($handler);
         $this->validate();
     }
@@ -53,7 +55,8 @@ class ClassMethodHandler
      */
     public function call()
     {
-        
+        $instance = new $this->class($this->arguments);
+        return call_user_func($instance->{$this->method});
     }
 
     /**
@@ -63,11 +66,20 @@ class ClassMethodHandler
      */
     private function extract($handler)
     {
-        
+        if (is_array($handler)) {
+            return $this->fromClassMethodArray($handler);
+        }
+        if (strpos($handler, '@') !== false) {
+            return $this->fromAtNotation($handler);
+        }
+        if (strpos($handler, '.') !== false) {
+            return $this->fromDotNotation($handler);
+        }
+        return $this->fromClassName($handler);
     }
 
     /**
-     * Validates that the current class and method exists.
+     * Validates that the current class and methods exist and are callable.
      * @return void
      */
     private function validate()
@@ -77,35 +89,50 @@ class ClassMethodHandler
 
     /**
      * Extracts the class name and method from the Class Method string in "@" notation (eg. Class@Method).
+     * @param string|array $handler The handler parameter
      * @return void
      */
-    private function fromAtNotation()
+    private function fromAtNotation($handler)
     {
-        
+        $parts = explode(CHAR_DOT, $handler);
+        if (count($parts) !== 2) {
+            // Not the correct number of array items value.
+        }
+        $this->class = $parts[0];
+        $this->method = $parts[1];
     }
 
     /**
      * Extracts the class name and method from the Class Method string in "dot" notation (eg. Class.Method).
+     * @param string|array $handler The handler parameter
      * @return void
      */
-    private function fromDotNotation()
+    private function fromDotNotation($handler)
     {
-        
+        $parts = explode(CHAR_AT, $handler);
+        if (count($parts) !== 2) {
+            // Not the correct number of array items value.
+        }
+        $this->class = $parts[0];
+        $this->method = $parts[1];
     }
 
     /**
      * Extracts the class name (no method present) from a single string.
-     * 
+     * @param string|array $handler The handler parameter
+     * @return void
      */
-    private function fromClassName()
+    private function fromClassName($handler)
     {
         
     }
 
     /**
      * Extracts the class and method name from an array eg (['Class', 'Method'])
+     * @param string|array $handler The handler parameter
+     * @return void
      */
-    private function fromClassMethodArray()
+    private function fromClassMethodArray($handler)
     {
         
     }
