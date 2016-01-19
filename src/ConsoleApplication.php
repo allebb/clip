@@ -131,9 +131,9 @@ class ConsoleApplication
     public function input($question, $default = '', $options = [])
     {
         if (empty($default)) {
-            fwrite(STDOUT, $question . ' ');
+            $this->write($question . ' ');
         } elseif (empty($options)) {
-            fwrite(STDOUT, $question . ' [' . $default . '] ');
+            $this->write($question . ' [' . $default . '] ');
         } else {
             foreach (strtolower($options) as $option) {
                 if ($option === strtolower($default)) {
@@ -142,7 +142,7 @@ class ConsoleApplication
                 $available_options[] = $option;
             }
             $available_opts = rtrim(implode($available_options, '/'), '/');
-            fwrite(STDOUT, $question . ' [' . $available_opts . '] ');
+            $this->write($question . ' [' . $available_opts . '] ');
         }
         $answer = rtrim(fgets(STDIN), PHP_EOL);
         if (empty($answer)) {
