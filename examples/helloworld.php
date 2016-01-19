@@ -27,7 +27,7 @@ require_once 'Commands/FlagsHandler.php';
 $app = new CommandRouter($argv);
 
 // Add our command and their handler class mappings
-$app->add('test', 'Commands\TestHandler@handle'); // Registering commands using the "at" notation and specifying the class method.
+$app->add('test', 'Commands\TestHandler@displayTest'); // Registering commands using the "at" notation and specifying the class method.
 $app->add('help', Commands\HelpHandler::class); // Registering command using class name (string)
 $app->add('check:name', ['Commands\UserHandler', 'handle']); // Registering the command handler using array notation.
 $app->add('flags', 'Commands\FlagsHandler.handle'); // Registering the command handler using "dot" notation.

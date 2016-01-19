@@ -5,7 +5,6 @@ namespace Commands;
 use Ballen\Clip\ConsoleApplication;
 use Ballen\Clip\Traits\RecievesArgumentsTrait;
 use Ballen\Clip\Interfaces\CommandInterface;
-use Ballen\Clip\Utilities\ArgumentsParser;
 
 /**
  * Clip
@@ -23,6 +22,10 @@ class UserHandler extends ConsoleApplication implements CommandInterface
 
     use RecievesArgumentsTrait;
 
+    /**
+     * Example array of allowed usernames.
+     * @var array
+     */
     private $allowed_usernames = [
         'john',
         'joe',
@@ -32,9 +35,8 @@ class UserHandler extends ConsoleApplication implements CommandInterface
 
     /**
      * Handle the command.
-     * @param ArgumentsParser $arguments
      */
-    public function handle(ArgumentsParser $arguments)
+    public function handle()
     {
         $this->writeln('Choosing from a list of: John, Joe, James or Jacob...');
         $username = $this->input('What is your pretend name?', false);

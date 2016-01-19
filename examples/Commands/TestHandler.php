@@ -5,7 +5,6 @@ namespace Commands;
 use Ballen\Clip\ConsoleApplication;
 use Ballen\Clip\Traits\RecievesArgumentsTrait;
 use Ballen\Clip\Interfaces\CommandInterface;
-use Ballen\Clip\Utilities\ArgumentsParser;
 
 /**
  * Clip
@@ -24,9 +23,9 @@ class TestHandler extends ConsoleApplication implements CommandInterface
     use RecievesArgumentsTrait;
 
     /**
-     * Handle the command.
+     * Handle the command using a named method (insread of the default handle() method)
      */
-    public function handle()
+    public function displayTest()
     {
         $this->writeln('Hello, recieved the "test" command just fine!');
         $this->exitWithSuccess();

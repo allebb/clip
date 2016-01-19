@@ -25,7 +25,6 @@ class FlagsHandler extends ConsoleApplication implements CommandInterface
 
     /**
      * Handle the command.
-     * @param ArgumentsParser $arguments
      */
     public function handle()
     {
