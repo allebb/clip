@@ -3,6 +3,7 @@
 namespace Commands;
 
 use Ballen\Clip\ConsoleApplication;
+use Ballen\Clip\Traits\RecievesArgumentsTrait;
 use Ballen\Clip\Interfaces\CommandInterface;
 use Ballen\Clip\Utilities\ArgumentsParser;
 
@@ -20,14 +21,16 @@ use Ballen\Clip\Utilities\ArgumentsParser;
 class FlagsHandler extends ConsoleApplication implements CommandInterface
 {
 
+    use RecievesArgumentsTrait;
+
     /**
      * Handle the command.
      * @param ArgumentsParser $arguments
      */
-    public function handle(ArgumentsParser $arguments)
+    public function handle()
     {
-        if ($arguments->getOption('country', false)) {
-            $this->writeln('Country specified was ' . ucfirst($arguments->getOption('country')) . '.');
+        if ($this->arguments()->getOption('country', false)) {
+            $this->writeln('Country specified was ' . ucfirst($this->arguments()->getOption('country')) . '.');
             $this->exitWithSuccess();
         }
         $this->writeln('Flags huh? - Run this helloworld.php flags --country="england" and see what happens!');

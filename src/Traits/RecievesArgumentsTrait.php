@@ -1,6 +1,6 @@
 <?php
 
-namespace Ballen\Clip\Interfaces;
+namespace Ballen\Clip\Traits;
 
 /**
  * Clip
@@ -13,8 +13,14 @@ namespace Ballen\Clip\Interfaces;
  * @link http://www.bobbyallen.me
  *
  */
-interface CommandInterface
+trait RecievesArgumentsTrait
 {
 
-    function __construct($argv);
+    /**
+     * Injects the parent consructor with the CLI arguments.
+     */
+    public function __construct($argv)
+    {
+        parent::__construct($argv);
+    }
 }

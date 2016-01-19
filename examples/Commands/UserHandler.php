@@ -3,6 +3,7 @@
 namespace Commands;
 
 use Ballen\Clip\ConsoleApplication;
+use Ballen\Clip\Traits\RecievesArgumentsTrait;
 use Ballen\Clip\Interfaces\CommandInterface;
 use Ballen\Clip\Utilities\ArgumentsParser;
 
@@ -19,6 +20,8 @@ use Ballen\Clip\Utilities\ArgumentsParser;
  */
 class UserHandler extends ConsoleApplication implements CommandInterface
 {
+
+    use RecievesArgumentsTrait;
 
     private $allowed_usernames = [
         'john',
