@@ -23,13 +23,13 @@ Alternatively you can manually add this library to your project using the follow
 
 ```json
 "require": {
-        "ballen/clip": "^1.0"
+        "ballen/clip": "^2.0"
 }
 ```
 
 Then install the package like so:
 
-```composer update ballen/clip --no-dev```
+```composer update ballen/clip```
 
 Support
 -------
