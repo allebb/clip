@@ -53,7 +53,7 @@ class ClassMethodHandler
      */
     public function __construct($handler, $constructor_arguments = [])
     {
-        $this->constructor_arguments = func_get_args($constructor_arguments);
+        $this->constructor_arguments = $constructor_arguments;
         $this->extract($handler);
         $this->validate();
     }

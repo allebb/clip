@@ -24,6 +24,11 @@ class CommandRouter
      * @var Collection
      */
     private $routes;
+
+    /**
+     * CLI arguments
+     * @var type 
+     */
     private $arguments;
 
     public function __construct($arguments = [])
@@ -55,7 +60,7 @@ class CommandRouter
             $command = $this->routes->get($call, false);
         }
         if ($command) {
-            $handler = new ClassMethodHandler($command);
+            $handler = new ClassMethodHandler($command, $this->arguments);
             return $handler->call($this->arguments);
         }
         throw new CommandNotFoundException(sprintf('Command %s is not registered.', $call));

@@ -34,12 +34,12 @@ class ConsoleApplication
 
     /**
      * Console Application Constructor
-     * @param array $argv The PHP $argv array (Pass $argv global if you wish to access the CLI arguments)
+     * @param ArgumentsParser $argv The PHP $argv array (Pass $argv global if you wish to access the CLI arguments)
      * @return void
      */
-    public function __construct($argv = [])
+    public function __construct(ArgumentsParser $argv)
     {
-        $this->arguments = new ArgumentsParser($argv);
+        $this->arguments = $argv;
         $this->router = new CommandRouter();
     }
 

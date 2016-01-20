@@ -2,6 +2,8 @@
 
 namespace Ballen\Clip\Traits;
 
+use Ballen\Clip\Utilities\ArgumentsParser;
+
 /**
  * Clip
  * 
@@ -19,7 +21,7 @@ trait RecievesArgumentsTrait
     /**
      * Injects the parent consructor with the CLI arguments.
      */
-    public function __construct($argv)
+    public function __construct(ArgumentsParser $argv)
     {
         parent::__construct($argv);
     }

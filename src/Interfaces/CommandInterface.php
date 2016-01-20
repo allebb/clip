@@ -2,6 +2,8 @@
 
 namespace Ballen\Clip\Interfaces;
 
+use Ballen\Clip\Utilities\ArgumentsParser;
+
 /**
  * Clip
  * 
@@ -16,5 +18,5 @@ namespace Ballen\Clip\Interfaces;
 interface CommandInterface
 {
 
-    function __construct($argv);
+    function __construct(ArgumentsParser $argv);
 }

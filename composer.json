@@ -1,6 +1,6 @@
 {
     "name": "ballen/clip",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "A package for speeding up development of PHP console (CLI) applications.",
     "type": "library",
     "keywords": ["cli", "commands", "command", "console"],
