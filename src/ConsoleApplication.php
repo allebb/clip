@@ -81,7 +81,7 @@ class ConsoleApplication
     public function isSuperUser()
     {
         if (!function_exists('posix_getuid')) {
-            throw new RuntimeException('The isSperUser() method requires the PHP POSIX extention to be enabled!');
+            throw new RuntimeException('The isSuperUser() method requires the PHP POSIX extention to be enabled!');
         }
         if (posix_getuid() == 0) {
             return true;
