@@ -50,12 +50,53 @@ class ConsoleApplicationTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($app->dispatch('test'));
     }
 
-    public function testCallingInvalidAtNotationRegisteredHandler()
+    public function testCallingAtNotationRegisteredHandler()
+    {
+        $app = new CommandRouter($this->argv_example1);
+        $app->add('test', 'TestHandler@handle');
+        $this->assertTrue($app->dispatch('test'));
+    }
+
+    public function testCallingNullAtNotationMethodHandler()
     {
         $command_name = 'test';
         $app = new CommandRouter($this->argv_example1);
-        $app->add($command_name, 'TestHandler@');
-        $this->setExpectedException('\RuntimeException', sprintf('The method "%s" does not exist in "TestHandler" class.', ''));
+        $app->add($command_name, 'TestHandler@dd@dd@');
+        $this->setExpectedException('\InvalidArgumentException', 'Invalid Class Method format from "at" notation.');
+        $app->dispatch($command_name);
+    }
+
+    public function testCallingInvalidAtNotationMethodHandler()
+    {
+        $command_name = 'test';
+        $app = new CommandRouter($this->argv_example1);
+        $app->add($command_name, 'TestHandler@invalidMethod');
+        $this->setExpectedException('\RuntimeException', sprintf('The method "%s" does not exist in "TestHandler" class.', 'invalidMethod'));
+        $app->dispatch($command_name);
+    }
+
+    public function testCallingDotNotationRegisteredHandler()
+    {
+        $app = new CommandRouter($this->argv_example1);
+        $app->add('test', 'TestHandler.handle');
+        $this->assertTrue($app->dispatch('test'));
+    }
+
+    public function testCallingNullDotNotationMethodHandler()
+    {
+        $command_name = 'test';
+        $app = new CommandRouter($this->argv_example1);
+        $app->add($command_name, 'TestHandler.dd.dd');
+        $this->setExpectedException('\InvalidArgumentException', 'Invalid Class Method format from "dot" notation.');
+        $app->dispatch($command_name);
+    }
+
+    public function testCallingInvalidDotNotationMethodHandler()
+    {
+        $command_name = 'test';
+        $app = new CommandRouter($this->argv_example1);
+        $app->add($command_name, 'TestHandler.invalidMethod');
+        $this->setExpectedException('\RuntimeException', sprintf('The method "%s" does not exist in "TestHandler" class.', 'invalidMethod'));
         $app->dispatch($command_name);
     }
 }

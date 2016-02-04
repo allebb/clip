@@ -121,7 +121,7 @@ class ClassMethodHandler
     private function fromAtNotation($handler)
     {
         $parts = explode(self::CHAR_AT, $handler);
-        if (count($parts) !== 2) {
+        if (count($parts) != 2) {
             throw new \InvalidArgumentException('Invalid Class Method format from "at" notation.');
         }
         $this->class = $parts[0];
@@ -137,7 +137,7 @@ class ClassMethodHandler
     private function fromDotNotation($handler)
     {
         $parts = explode(self::CHAR_DOT, $handler);
-        if (count($parts) !== 2) {
+        if (count($parts) != 2) {
             throw new \InvalidArgumentException('Invalid Class Method format from "dot" notation.');
         }
         $this->class = $parts[0];
@@ -166,7 +166,7 @@ class ClassMethodHandler
      */
     private function fromClassMethodArray($handler)
     {
-        if (count($handler) !== 2) {
+        if (count($handler) != 2) {
             throw new \InvalidArgumentException('Class method array constructor can only contain 2 elements.');
         }
         $this->class = $handler[0];
