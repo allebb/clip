@@ -99,12 +99,65 @@ class ConsoleApplicationTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\RuntimeException', sprintf('The method "%s" does not exist in "TestHandler" class.', 'invalidMethod'));
         $app->dispatch($command_name);
     }
+
+    public function testCallingArrayRegisteredHandler()
+    {
+        $app = new CommandRouter($this->argv_example1);
+        $app->add('test', ['TestHandler', 'customMethodName']);
+        $this->assertTrue($app->dispatch('test'));
+    }
+
+    public function testCallingNullArrayMethodHandler()
+    {
+        $command_name = 'test';
+        $app = new CommandRouter($this->argv_example1);
+        $app->add($command_name, ['TestHandler', 'customMethodName', 'dd', 'dd']);
+        $this->setExpectedException('\InvalidArgumentException', 'lass method array constructor can only contain 2 elements.');
+        $app->dispatch($command_name);
+    }
+
+    public function testCallingInvalidArrayMethodHandler()
+    {
+        $command_name = 'test';
+        $app = new CommandRouter($this->argv_example1);
+        $app->add($command_name, ['TestHandler', 'invalidMethod']);
+        $this->setExpectedException('\RuntimeException', sprintf('The method "%s" does not exist in "TestHandler" class.', 'invalidMethod'));
+        $app->dispatch($command_name);
+    }
+
+    public function testCallingInvalidHandlerClassNotImplementingConsoleInterface()
+    {
+        $command_name = 'test';
+        $app = new CommandRouter($this->argv_example1);
+        $app->add($command_name, 'TestInvalidHandler');
+        $this->setExpectedException('\InvalidArgumentException', 'The command class must implement the "CommandInterface" interface.');
+        $app->dispatch($command_name);
+    }
 }
 
 /**
  * Simple example TestHandler Class
  */
 class TestHandler extends ConsoleApplication implements CommandInterface
+{
+
+    use RecievesArgumentsTrait;
+
+    public function handle()
+    {
+        return true;
+    }
+
+    public function customMethodName()
+    {
+        return true;
+    }
+}
+
+/**
+ * Simple example TestHandler Class not implemetning the CommandInteface.
+ */
+class TestInvalidHandler extends ConsoleApplication
 {
 
     use RecievesArgumentsTrait;
