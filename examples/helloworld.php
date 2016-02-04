@@ -14,8 +14,9 @@ use Ballen\Clip\Exceptions\CommandNotFoundException;
  * @link http://www.bobbyallen.me
  *
  */
-// Initiate the Composer autoloader.
 $bindir = dirname(__FILE__);
+
+// Initiate the Composer autoloader.
 require_once $bindir . '/../vendor/autoload.php';
 
 // If not using Composer in your project you'll need to "require" the command handlers..
