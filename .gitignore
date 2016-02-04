@@ -1,2 +1,5 @@
 /nbproject
 /vendor
+/report
+.DS_Store
+Thumbs.db
