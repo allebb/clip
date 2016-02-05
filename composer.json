@@ -17,7 +17,7 @@
         "issues": "https://github.com/bobsta63/clip/issues"
     },
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.5.0",
         "ballen/collection": "^1.0"
     },
     "require-dev": {
