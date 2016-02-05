@@ -5,7 +5,7 @@ A super-lightweight package for speeding up development of PHP console (CLI) app
 Requirements
 ------------
 
-This library requires PHP 5.4+
+This library requires PHP 5.5+
 
 License
 -------
