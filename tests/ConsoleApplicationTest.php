@@ -13,12 +13,6 @@ class ConsoleApplicationTest extends \PHPUnit_Framework_TestCase
      */
     private $argv_example1 = ['example_app.php', 'help'];
 
-    /**
-     * Extended example $argv array, excute being 'php env add --DB_USER="ballen" --DB_PASS="my_password_here" --quiet --no-interaction -yRf'
-     * @var array
-     */
-    private $argv_example2 = ['env', 'add', '--DB_USER="ballen"', '--DB_PASS="my_password_here"', '--quiet', '--no-interaction', '-yRf'];
-
     public function testCallingUnregisteredHandler()
     {
         $app = new CommandRouter($this->argv_example1);
