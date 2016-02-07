@@ -48,7 +48,7 @@ class ClassMethodHandler
 
     /**
      * Creates a new instance
-     * @param string $handler
+     * @param string|array $handler
      * @param array $constructor_arguments Optional arguments to pass to the class constructor.
      */
     public function __construct($handler, $constructor_arguments = [])

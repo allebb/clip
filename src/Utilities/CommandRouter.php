@@ -27,7 +27,7 @@ class CommandRouter
 
     /**
      * CLI arguments
-     * @var type 
+     * @var ArgumentParser 
      */
     private $arguments;
 
@@ -53,7 +53,7 @@ class CommandRouter
      * @return void
      * @throws CommandNotFoundException
      */
-    public function dispatch($call = false)
+    public function dispatch($call = null)
     {
         $command = $this->routes->get($this->arguments->getCommand(1), false);
         if ($this->routes->get($call, false)) {
