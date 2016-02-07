@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "09768bc21a4af6d26f4cc5c025e2c761",
-    "content-hash": "d446d304afe63e2c41d2c3c555e3db99",
+    "hash": "d768ec15024c925a94e84e8b00e9e1ba",
+    "content-hash": "5cd4a25f67dbe0f10aa13bbddb736ac8",
     "packages": [
         {
             "name": "ballen/collection",
-            "version": "1.0.3",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobsta63/collection.git",
-                "reference": "0410ed3878902acf4fb5ab1e1dd416f074f9306f"
+                "reference": "b55bd558acc58e8ed07eaa58c39d88674677cf6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobsta63/collection/zipball/0410ed3878902acf4fb5ab1e1dd416f074f9306f",
-                "reference": "0410ed3878902acf4fb5ab1e1dd416f074f9306f",
+                "url": "https://api.github.com/repos/bobsta63/collection/zipball/b55bd558acc58e8ed07eaa58c39d88674677cf6e",
+                "reference": "b55bd558acc58e8ed07eaa58c39d88674677cf6e",
                 "shasum": ""
             },
             "require": {
@@ -35,7 +35,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPLv2"
+                "MIT"
             ],
             "authors": [
                 {
@@ -45,13 +45,13 @@
                     "role": "Developer"
                 }
             ],
-            "description": "A Collection class (library) which provides OOP replacement for the traditional array data structure.",
+            "description": "A Collection library which provides OOP replacement for the traditional array data structure.",
             "keywords": [
                 "array",
                 "collection",
                 "list"
             ],
-            "time": "2015-12-21 12:51:00"
+            "time": "2016-02-07 12:13:39"
         }
     ],
     "packages-dev": [
@@ -853,7 +853,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.0"
+        "php": ">=5.5.0"
     },
     "platform-dev": []
 }
