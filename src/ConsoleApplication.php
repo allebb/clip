@@ -35,7 +35,6 @@ class ConsoleApplication
     /**
      * Console Application Constructor
      * @param ArgumentsParser $argv The PHP $argv array (Pass $argv global if you wish to access the CLI arguments)
-     * @return void
      */
     public function __construct(ArgumentsParser $argv)
     {
@@ -135,6 +134,7 @@ class ConsoleApplication
         } elseif (empty($options)) {
             $this->write($question . ' [' . $default . '] ');
         } else {
+            $available_options = [];
             foreach (strtolower($options) as $option) {
                 if ($option === strtolower($default)) {
                     $option = strtoupper($option);
