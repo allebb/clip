@@ -191,8 +191,6 @@ class ArgumentsParser
             $value = '';
             if (strpos($name, '=')) {
                 list($name, $value) = explode('=', $argument, 2);
-            } else {
-                $value = rtrim($argument, $value, ' ');
             }
             $this->options->put(ltrim($name, '-'), trim($value, '"'));
             return true;
