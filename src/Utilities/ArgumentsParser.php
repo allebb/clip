@@ -87,7 +87,7 @@ class ArgumentsParser
      * Return all CLI arguments in order.
      * @return Collection
      */
-    public function all()
+    public function arguments()
     {
         return $this->arguments;
     }
