@@ -52,6 +52,13 @@ class ArgumentsParserTest extends \PHPUnit_Framework_TestCase
             ], $app->options()->all()->toArray());
     }
 
+    public function testGetSpecificOption()
+    {
+        $app = new Ballen\Clip\Utilities\ArgumentsParser($this->argv_example2);
+        $this->assertEquals('my password here', $app->getOption('DB_PASS'));
+        $this->assertEquals('localhost', $app->getOption('DB_HOST', 'localhost'));
+    }
+
     public function testTotalFlags()
     {
         $app = new Ballen\Clip\Utilities\ArgumentsParser($this->argv_example2);
@@ -88,5 +95,15 @@ class ArgumentsParserTest extends \PHPUnit_Framework_TestCase
             '--no-interaction',
             '-yRf',
             ], $app->arguments()->all()->toArray());
+    }
+
+    public function testFlagSet()
+    {
+        $app = new Ballen\Clip\Utilities\ArgumentsParser($this->argv_example2);
+        $this->assertTrue($app->isFlagSet('y'));
+        $this->assertTrue($app->isFlagSet('R'));
+        $this->assertFalse($app->isFlagSet('z'));
+        $this->assertTrue($app->isFlagSet('no-interaction'));
+        $this->assertFalse($app->isFlagSet('i'));
     }
 }
