@@ -146,7 +146,7 @@ class ClassMethodHandler
 
     /**
      * Extracts the class name (no method present) from a single string.
-     * @param string|array $handler The handler parameter
+     * @param string $handler The handler parameter
      * @return void
      * @throws \InvalidArgumentException
      */

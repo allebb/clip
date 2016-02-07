@@ -27,7 +27,7 @@ class CommandRouter
 
     /**
      * CLI arguments
-     * @var ArgumentParser 
+     * @var ArgumentsParser 
      */
     private $arguments;
 
