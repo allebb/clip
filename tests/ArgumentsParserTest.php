@@ -106,4 +106,19 @@ class ArgumentsParserTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($app->isFlagSet('no-interaction'));
         $this->assertFalse($app->isFlagSet('i'));
     }
+
+    public function testValidOptionsSet()
+    {
+        $app = new Ballen\Clip\Utilities\ArgumentsParser($this->argv_example2);
+        $this->assertTrue($app->requiredOptions(['DB_USER', 'DB_PASS']));
+        $this->assertTrue($app->requiredOptions(['DB_USER']));
+        $this->assertTrue($app->requiredOptions());
+    }
+
+    public function testInvalidOptionsSet()
+    {
+        $app = new Ballen\Clip\Utilities\ArgumentsParser($this->argv_example2);
+        $this->assertFalse($app->requiredOptions(['DB_USER', 'NON_SET_OPTION']));
+        $this->assertFalse($app->requiredOptions(['INVALID_OPTION', 'NON_SET_OPTION']));
+    }
 }
