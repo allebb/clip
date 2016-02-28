@@ -20,6 +20,9 @@ use Ballen\Clip\Interfaces\CommandInterface;
 class RequiredOptionsExampleHander extends ConsoleApplication implements CommandInterface
 {
 
+    private $name;
+    private $age;
+
     use RecievesArgumentsTrait;
 
     /**
@@ -27,6 +30,11 @@ class RequiredOptionsExampleHander extends ConsoleApplication implements Command
      */
     public function handle()
     {
-        
+        if (!$this->arguments()->requiredOptions(['name', 'age'])) {
+            $this->writeln('The --name and --age options are mandatory!')->exitWithError();
+        }
+        $this->name = $this->arguments()->options()->get('name');
+        $this->age = $this->arguments()->options()->get('age');
+        $this->writeln(sprintf('Hello %s, thanks for confirming your age as %s years old!', $this->name, $this->age))->exitWithSuccess();
     }
 }

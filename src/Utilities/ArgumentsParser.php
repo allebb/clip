@@ -212,5 +212,6 @@ class ArgumentsParser
                 return false;
             }
         }
+        return true;
     }
 }

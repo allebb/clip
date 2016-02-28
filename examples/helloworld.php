@@ -24,6 +24,7 @@ require_once 'Commands/TestHandler.php';
 require_once 'Commands/HelpHandler.php';
 require_once 'Commands/UserHandler.php';
 require_once 'Commands/FlagsHandler.php';
+require_once 'Commands/RequiredOptionsExampleHander.php';
 
 $app = new CommandRouter($argv);
 
@@ -32,6 +33,7 @@ $app->add('test', 'Commands\TestHandler@displayTest'); // Registering commands u
 $app->add('help', Commands\HelpHandler::class); // Registering command using class name (string)
 $app->add('check:name', ['Commands\UserHandler', 'handle']); // Registering the command handler using array notation.
 $app->add('flags', 'Commands\FlagsHandler.handle'); // Registering the command handler using "dot" notation.
+$app->add('profile', Commands\RequiredOptionsExampleHander::class); // An example of setting required options.
 
 try {
     $app->dispatch();
