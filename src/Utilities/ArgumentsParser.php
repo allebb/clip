@@ -197,4 +197,20 @@ class ArgumentsParser
         }
         return false;
     }
+
+    /**
+     * Checks that an array of options have been set at runtime.
+     * @param array $options The required options.
+     */
+    public function requiredOptions($options = [])
+    {
+        if (!count($options)) {
+            return true;
+        }
+        foreach ($options as $option) {
+            if (!$this->options()->get($option)) {
+                return false;
+            }
+        }
+    }
 }
