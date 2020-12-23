@@ -2,8 +2,9 @@
 use Ballen\Clip\ConsoleApplication;
 use Ballen\Clip\Traits\RecievesArgumentsTrait;
 use Ballen\Clip\Interfaces\CommandInterface;
+use PHPUnit\Framework\TestCase;
 
-class CommandRouterTest extends \PHPUnit_Framework_TestCase
+class CommandRouterTest extends TestCase
 {
 
     /**

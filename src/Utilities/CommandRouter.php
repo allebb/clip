@@ -12,7 +12,7 @@ use Ballen\Clip\Exceptions\CommandNotFoundException;
  *
  * @author Bobby Allen <ballen@bobbyallen.me>
  * @license https://raw.githubusercontent.com/bobsta63/clip/master/LICENSE
- * @link https://github.com/bobsta63/clip
+ * @link https://github.com/allebb/clip
  * @link http://www.bobbyallen.me
  *
  */

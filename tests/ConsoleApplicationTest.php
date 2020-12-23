@@ -3,8 +3,9 @@ use Ballen\Clip\Utilities\CommandRouter;
 use Ballen\Clip\ConsoleApplication;
 use Ballen\Clip\Traits\RecievesArgumentsTrait;
 use Ballen\Clip\Interfaces\CommandInterface;
+use PHPUnit\Framework\TestCase;
 
-class ConsoleApplicationTest extends \PHPUnit_Framework_TestCase
+class ConsoleApplicationTest extends TestCase
 {
 
     /**
@@ -16,7 +17,7 @@ class ConsoleApplicationTest extends \PHPUnit_Framework_TestCase
     public function testCallingUnregisteredHandler()
     {
         $app = new CommandRouter($this->argv_example1);
-        $this->setExpectedException('Ballen\Clip\Exceptions\CommandNotFoundException', 'Command  is not registered.');
+        $this->expectException('Ballen\Clip\Exceptions\CommandNotFoundException', 'Command  is not registered.');
         $app->dispatch();
     }
 
@@ -24,7 +25,7 @@ class ConsoleApplicationTest extends \PHPUnit_Framework_TestCase
     {
         $command_name = 'a_command_name';
         $app = new CommandRouter($this->argv_example1);
-        $this->setExpectedException('Ballen\Clip\Exceptions\CommandNotFoundException', sprintf('Command %s is not registered.', $command_name));
+        $this->expectException('Ballen\Clip\Exceptions\CommandNotFoundException', sprintf('Command %s is not registered.', $command_name));
         $app->dispatch('a_command_name');
     }
 
@@ -33,7 +34,7 @@ class ConsoleApplicationTest extends \PHPUnit_Framework_TestCase
         $command_name = 'a_command_name';
         $app = new CommandRouter($this->argv_example1);
         $app->add($command_name, 'Test@handle');
-        $this->setExpectedException('\RuntimeException', sprintf('Class %s does not exist, is this the correct namespace?', 'Test'));
+        $this->expectException('\RuntimeException', sprintf('Class %s does not exist, is this the correct namespace?', 'Test'));
         $app->dispatch($command_name);
     }
 
@@ -56,7 +57,7 @@ class ConsoleApplicationTest extends \PHPUnit_Framework_TestCase
         $command_name = 'test';
         $app = new CommandRouter($this->argv_example1);
         $app->add($command_name, 'TestHandler@dd@dd@');
-        $this->setExpectedException('\InvalidArgumentException', 'Invalid Class Method format from "at" notation.');
+        $this->expectException('\InvalidArgumentException', 'Invalid Class Method format from "at" notation.');
         $app->dispatch($command_name);
     }
 
@@ -65,7 +66,7 @@ class ConsoleApplicationTest extends \PHPUnit_Framework_TestCase
         $command_name = 'test';
         $app = new CommandRouter($this->argv_example1);
         $app->add($command_name, 'TestHandler@invalidMethod');
-        $this->setExpectedException('\RuntimeException', sprintf('The method "%s" does not exist in "TestHandler" class.', 'invalidMethod'));
+        $this->expectException('\RuntimeException', sprintf('The method "%s" does not exist in "TestHandler" class.', 'invalidMethod'));
         $app->dispatch($command_name);
     }
 
@@ -81,7 +82,7 @@ class ConsoleApplicationTest extends \PHPUnit_Framework_TestCase
         $command_name = 'test';
         $app = new CommandRouter($this->argv_example1);
         $app->add($command_name, 'TestHandler.dd.dd');
-        $this->setExpectedException('\InvalidArgumentException', 'Invalid Class Method format from "dot" notation.');
+        $this->expectException('\InvalidArgumentException', 'Invalid Class Method format from "dot" notation.');
         $app->dispatch($command_name);
     }
 
@@ -90,7 +91,7 @@ class ConsoleApplicationTest extends \PHPUnit_Framework_TestCase
         $command_name = 'test';
         $app = new CommandRouter($this->argv_example1);
         $app->add($command_name, 'TestHandler.invalidMethod');
-        $this->setExpectedException('\RuntimeException', sprintf('The method "%s" does not exist in "TestHandler" class.', 'invalidMethod'));
+        $this->expectException('\RuntimeException', sprintf('The method "%s" does not exist in "TestHandler" class.', 'invalidMethod'));
         $app->dispatch($command_name);
     }
 
@@ -106,7 +107,7 @@ class ConsoleApplicationTest extends \PHPUnit_Framework_TestCase
         $command_name = 'test';
         $app = new CommandRouter($this->argv_example1);
         $app->add($command_name, ['TestHandler', 'customMethodName', 'dd', 'dd']);
-        $this->setExpectedException('\InvalidArgumentException', 'lass method array constructor can only contain 2 elements.');
+        $this->expectException('\InvalidArgumentException', 'lass method array constructor can only contain 2 elements.');
         $app->dispatch($command_name);
     }
 
@@ -115,7 +116,7 @@ class ConsoleApplicationTest extends \PHPUnit_Framework_TestCase
         $command_name = 'test';
         $app = new CommandRouter($this->argv_example1);
         $app->add($command_name, ['TestHandler', 'invalidMethod']);
-        $this->setExpectedException('\RuntimeException', sprintf('The method "%s" does not exist in "TestHandler" class.', 'invalidMethod'));
+        $this->expectException('\RuntimeException', sprintf('The method "%s" does not exist in "TestHandler" class.', 'invalidMethod'));
         $app->dispatch($command_name);
     }
 
@@ -124,7 +125,7 @@ class ConsoleApplicationTest extends \PHPUnit_Framework_TestCase
         $command_name = 'test';
         $app = new CommandRouter($this->argv_example1);
         $app->add($command_name, 'TestInvalidHandler');
-        $this->setExpectedException('\InvalidArgumentException', 'The command class must implement the "CommandInterface" interface.');
+        $this->expectException('\InvalidArgumentException', 'The command class must implement the "CommandInterface" interface.');
         $app->dispatch($command_name);
     }
 }

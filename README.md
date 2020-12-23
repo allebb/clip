@@ -13,7 +13,9 @@ A super-lightweight package for speeding up development of PHP console (CLI) app
 Requirements
 ------------
 
-This library requires PHP 7.2+
+This library is unit tested against PHP 7.3, 7.4 and 8.0!
+
+If you need to use an older version of PHP, you should instead install the 2.x version of this library (see below for details).
 
 License
 -------
@@ -23,9 +25,15 @@ This client library is released under the MIT license, a [copy of the license](h
 Setup
 -----
 
-To install the package into your project (assuming you are using the Composer package manager) you can simply execute the following command from your terminal in the root of your project folder:
+To install the latest version of this package into your project (assuming you are using the Composer package manager) you can simply execute the following command from your terminal in the root of your project folder:
 
 ```composer require ballen/clip```
+
+**If you need to use an older version of PHP, version 1.x.x supports PHP 5.6, 7.0, 7.1 and 7.2, you can install this version using Composer with this command instead:**
+
+```shell
+composer require ballen/clip ^1.0
+```
 
 Support
 -------
