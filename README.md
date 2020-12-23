@@ -29,10 +29,10 @@ To install the latest version of this package into your project (assuming you ar
 
 ```composer require ballen/clip```
 
-**If you need to use an older version of PHP, version 1.x.x supports PHP 5.6, 7.0, 7.1 and 7.2, you can install this version using Composer with this command instead:**
+**If you need to use an older version of PHP, version 2.x.x supports PHP 5.6, 7.0, 7.1 and 7.2, you can install this version using Composer with this command instead:**
 
 ```shell
-composer require ballen/clip ^1.0
+composer require ballen/clip ^2.0
 ```
 
 Support
