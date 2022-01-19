@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4fcf7cedae166895da43e079a843fb73",
+    "content-hash": "8581ce2eedf851e5e1ac93bc33b6e0d3",
     "packages": [
         {
             "name": "ballen/collection",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/allebb/collection.git",
-                "reference": "e9069ebd58aa9f2b5e189e71617fc23464f285aa"
+                "reference": "cf33e86b6452deedc334e7802081739d3a3eebc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/allebb/collection/zipball/e9069ebd58aa9f2b5e189e71617fc23464f285aa",
-                "reference": "e9069ebd58aa9f2b5e189e71617fc23464f285aa",
+                "url": "https://api.github.com/repos/allebb/collection/zipball/cf33e86b6452deedc334e7802081739d3a3eebc5",
+                "reference": "cf33e86b6452deedc334e7802081739d3a3eebc5",
                 "shasum": ""
             },
             "require": {
@@ -53,9 +53,9 @@
             ],
             "support": {
                 "issues": "https://github.com/allebb/collection/issues",
-                "source": "https://github.com/allebb/collection/tree/2.0.0"
+                "source": "https://github.com/allebb/collection/tree/2.0.1"
             },
-            "time": "2020-12-23T10:57:20+00:00"
+            "time": "2022-01-16T20:32:58+00:00"
         }
     ],
     "packages-dev": [
@@ -2159,7 +2159,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.3.0"
+        "php": "^7.3.0|^8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.2.0"

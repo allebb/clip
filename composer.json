@@ -2,7 +2,12 @@
     "name": "ballen/clip",
     "description": "A package for speeding up development of PHP console (CLI) applications.",
     "type": "library",
-    "keywords": ["cli", "commands", "command", "console"],
+    "keywords": [
+        "cli",
+        "commands",
+        "command",
+        "console"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -17,7 +22,7 @@
         "issues": "https://github.com/bobsta63/clip/issues"
     },
     "require": {
-        "php": ">=7.3.0",
+        "php": "^7.3.0|^8.0",
         "ballen/collection": "^2.0"
     },
     "require-dev": {
